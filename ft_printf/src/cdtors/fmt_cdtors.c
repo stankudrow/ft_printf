@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cdtor_fmt.c                                        :+:      :+:    :+:   */
+/*   fmt_cdtors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 13:21:02 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/03 21:57:18 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 17:49:35 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 22:17:26 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_fmt	*create_fmt(char **strp, const char *fmt, va_list ap)
+t_fmt	*init_fmt(char **strp, const char *fmt, va_list ap)
 {
 	t_fmt	*fmt_s;
 
@@ -37,10 +37,16 @@ t_fmt	*create_fmt(char **strp, const char *fmt, va_list ap)
 	return (NULL);
 }
 
-void	destroy_fmt(t_fmt **fmt)
+void	del_fmt(t_fmt **fmt)
 {
-	if ((*fmt)->str)
-		free((*fmt)->str);
-	free(*fmt);
-	*fmt = NULL;
+	if (fmt)
+	{
+		if (*fmt)
+		{
+			if ((*fmt)->str)
+				free((*fmt)->str);
+			free(*fmt);
+			*fmt = NULL;
+		}
+	}
 }

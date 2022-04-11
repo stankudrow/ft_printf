@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pad.c                                           :+:      :+:    :+:   */
+/*   pf_pad.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 22:09:14 by stanislav         #+#    #+#             */
-/*   Updated: 2022/03/21 22:09:27 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 21:43:45 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 22:04:06 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*ft_alloc_pad(unsigned char chr, size_t times)
+static char	*pf_alloc_pad(unsigned char chr, size_t times)
 {
 	char	*pad;
 
@@ -28,12 +28,12 @@ static char	*ft_alloc_pad(unsigned char chr, size_t times)
 	return (NULL);
 }
 
-char	*ft_pad_right(const char *str, unsigned char chr, size_t times)
+char	*pf_pad_right(const char *str, unsigned char chr, size_t times)
 {
 	char	*pad;
 	char	*newstr;
 
-	pad = ft_alloc_pad(chr, times);
+	pad = pf_alloc_pad(chr, times);
 	if (pad)
 	{
 		newstr = ft_strjoin(str, pad);
@@ -41,15 +41,18 @@ char	*ft_pad_right(const char *str, unsigned char chr, size_t times)
 		if (newstr)
 			return (newstr);
 	}
+	newstr = ft_strdup(str);
+	if (newstr)
+		return (newstr);
 	return (NULL);
 }
 
-char	*ft_pad_left(const char *str, unsigned char chr, size_t times)
+char	*pf_pad_left(const char *str, unsigned char chr, size_t times)
 {
 	char	*pad;
 	char	*newstr;
 
-	pad = ft_alloc_pad(chr, times);
+	pad = pf_alloc_pad(chr, times);
 	if (pad)
 	{
 		newstr = ft_strjoin(pad, str);
@@ -57,5 +60,8 @@ char	*ft_pad_left(const char *str, unsigned char chr, size_t times)
 		if (newstr)
 			return (newstr);
 	}
+	newstr = ft_strdup(str);
+	if (newstr)
+		return (newstr);
 	return (NULL);
 }

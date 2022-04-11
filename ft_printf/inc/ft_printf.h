@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 22:40:32 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/03 21:54:45 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 21:42:34 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <stddef.h>
+# include <wchar.h>
 
 # include "ft_ctype.h"
 # include "ft_putters.h"
 # include "ft_stdbool.h"
 # include "ft_stdlib.h"
 # include "ft_string.h"
-
-/* status codes of operations != exit codes */
-# define ERROR -1
-# define FAILURE 0
-# define SUCCESS 1
 
 # define UI unsigned int
 
@@ -39,7 +35,14 @@
 # define NULLSTR "(null)"
 
 # define AVAIL_FLAGS "#0- +"
-# define AVAIL_TYPES "cspdiuxX%"
+# define INT_TYPES "cspdiuxX%"
+
+typedef enum e_status
+{
+	ERROR = -1,
+	FAILURE = 0,
+	OK = 1
+}	t_status;
 
 /*
 	fmt		-> a format string
@@ -85,31 +88,35 @@ typedef struct s_spec
 	t_length	length;
 	char		type;
 	size_t		len;
-	const char	*str;
+	char		*str;
 }	t_spec;
 
-int		ft_printf(const char *fmt, ...);
-int		ft_vasprintf(char **strp, const char *fmt, va_list ap);
+int			ft_printf(const char *fmt, ...);
+int			ft_vasprintf(char **strp, const char *fmt, va_list ap);
 
-t_fmt	*create_fmt(char **strp, const char *fmt, va_list ap);
-void	destroy_fmt(t_fmt **fmt);
-t_spec	*create_spec(void);
-void	destroy_spec(t_spec **spec);
+t_bool		pf_intabs_overflow(int nbr);
+t_bool		pf_intsum_overflow(int nbr1, int nbr2);
+t_bool		pf_atoi(int *number, const char *nptr);
+char		*pf_pad_right(const char *str, unsigned char chr, size_t times);
+char		*pf_pad_left(const char *str, unsigned char chr, size_t times);
 
-int		parse_spec(t_fmt *fmt);
-int		set_spec(t_fmt *fmt, t_spec *spec);
-int		set_flags(t_fmt*fmt, t_spec *spec);
-int		set_width(t_fmt *fmt, t_spec *spec);
-int		set_precision(t_fmt *fmt, t_spec *spec);
-int		set_length(t_fmt *fmt, t_spec *spec);
-int		set_type(t_fmt *fmt, t_spec *spec);
+t_fmt		*init_fmt(char **strp, const char *fmt, va_list ap);
+void		del_fmt(t_fmt **fmt);
+t_spec		*init_spec(void);
+void		del_spec(t_spec **spec);
+
+t_status	parse_spec(t_fmt *fmt);
+t_status	set_spec(t_fmt *fmt, t_spec *spec);
+t_status	set_flags(t_fmt*fmt, t_spec *spec);
+t_status	set_width(t_fmt *fmt, t_spec *spec);
+t_status	set_precision(t_fmt *fmt, t_spec *spec);
+t_status	set_length(t_fmt *fmt, t_spec *spec);
+t_status	set_type(t_fmt *fmt, t_spec *spec);
+
+t_status	resolve_spec(t_fmt *fmt, t_spec *spec);
+t_status	resolve_c(t_fmt *fmt, t_spec *spec);
 
 /*
-char		*ft_pad_right(const char *str, unsigned char chr, size_t times);
-char		*ft_pad_left(const char *str, unsigned char chr, size_t times);
-
-int			resolve_spec(t_fmt *fmt_s, t_spec *spec);
-int			resolve_c(t_spec *spec, int chr);
 int			resolve_s(t_spec *spec, char *str);
 int			resolve_di(t_spec *spec, int nbr);
 int			resolve_o(t_spec *spec, UI unbr);
@@ -118,7 +125,5 @@ int			resolve_uxl(t_spec *spec, UI unbr);
 int			resolve_uxu(t_spec *spec, UI unbr);
 int			resolve_p(t_spec *spec, UI unbr);
 */
-
-char	ft_is_int_overflow(int nbr1, char op, int nbr2);
 
 #endif

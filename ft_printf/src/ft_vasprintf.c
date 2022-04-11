@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 23:07:04 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/03 23:29:15 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 18:54:58 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 19:40:40 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	buffer_fmtstr(t_fmt *fmt)
+static t_status	buffer_fmtstr(t_fmt *fmt)
 {
 	ptrdiff_t	sublen;
 	char		*substr;
@@ -31,19 +31,19 @@ static int	buffer_fmtstr(t_fmt *fmt)
 	free(fmt->str);
 	fmt->str = newstr;
 	fmt->fpp = fmt->fcp;
-	if (ft_is_int_overflow(fmt->total, '+', sublen))
+	if (pf_intsum_overflow(fmt->total, sublen))
 		return (ERROR);
 	fmt->total += sublen;
-	return (SUCCESS);
+	return (OK);
 }
 
-static int	finish_fmt(t_fmt *fmt, char **strp, t_bool status)
+static int	finish_fmt(t_fmt *fmt, char **strp, t_bool exitcode)
 {
 	int	total;
 
-	if (status == EXIT_SUCCESS)
+	if (exitcode == EXIT_SUCCESS)
 	{
-		if (buffer_fmtstr(fmt) == SUCCESS)
+		if (buffer_fmtstr(fmt) == OK)
 		{
 			total = fmt->total;
 			*strp = fmt->str;
@@ -51,7 +51,7 @@ static int	finish_fmt(t_fmt *fmt, char **strp, t_bool status)
 			return (total);
 		}
 	}
-	destroy_fmt(&fmt);
+	del_fmt(&fmt);
 	*strp = NULL;
 	return (ERROR);
 }
@@ -60,16 +60,16 @@ int	ft_vasprintf(char **strp, const char *fmt, va_list ap)
 {
 	t_fmt	*fmt_s;
 
-	fmt_s = create_fmt(strp, fmt, ap);
+	fmt_s = init_fmt(strp, fmt, ap);
 	if (!fmt_s)
 		return (ERROR);
 	while (*fmt_s->fcp)
 	{
-		if (ft_is_int_overflow(fmt_s->fcp - fmt_s->fpp, '+', 1))
+		if (pf_intsum_overflow(fmt_s->fcp - fmt_s->fpp, 1))
 			return (finish_fmt(fmt_s, strp, EXIT_FAILURE));
 		if (*fmt_s->fcp == '%')
 		{
-			if (buffer_fmtstr(fmt_s) != SUCCESS)
+			if (buffer_fmtstr(fmt_s) != OK)
 				return (finish_fmt(fmt_s, strp, EXIT_FAILURE));
 			if (parse_spec(fmt_s) == ERROR)
 				return (finish_fmt(fmt_s, strp, EXIT_FAILURE));

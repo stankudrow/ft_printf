@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ps_intop_overflow.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 21:45:25 by stanislav         #+#    #+#             */
-/*   Updated: 2022/03/08 12:36:34 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 18:54:39 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 19:42:11 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stdlib.h"
+#include "ft_printf.h"
 
-char	*ft_itoa(int nbr)
+t_bool	pf_intabs_overflow(int nbr)
 {
-	return (ft_itoa_base(nbr, "0123456789"));
+	return (nbr == INT_MIN);
+}
+
+t_bool	pf_intsum_overflow(int nbr1, int nbr2)
+{
+	if (nbr2 > 0)
+		return ((INT_MAX - nbr2) < nbr1);
+	return ((INT_MIN - nbr2) > nbr1);
 }

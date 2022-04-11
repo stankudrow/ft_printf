@@ -1,0 +1,3 @@
+[submodule "ft_printf/libftx"]
+	path = ft_printf/libftx
+	url = https://github.com/stankudrow/libftx

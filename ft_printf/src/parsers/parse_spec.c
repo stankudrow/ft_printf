@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/06 00:58:16 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/03 21:53:33 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 17:53:39 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 17:53:39 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	set_spec(t_fmt *fmt, t_spec *spec)
+t_status	set_spec(t_fmt *fmt, t_spec *spec)
 {
 	if (set_flags(fmt, spec))
 		if (set_width(fmt, spec) && set_precision(fmt, spec))
@@ -21,22 +21,22 @@ int	set_spec(t_fmt *fmt, t_spec *spec)
 	return (ERROR);
 }
 
-int	parse_spec(t_fmt *fmt)
+t_status	parse_spec(t_fmt *fmt)
 {
-	t_spec	*spec;
-	int		status;
+	t_spec		*spec;
+	t_status	status;
 
 	status = ERROR;
 	if (*fmt->fcp == '%')
 	{
 		fmt->fcp++;
-		spec = create_spec();
+		spec = init_spec();
 		if (spec)
 		{
 			status = set_spec(fmt, spec);
-			//if (status == SUCCESS)
-			//	status = resolve_spec(fmt, spec);
-			destroy_spec(&spec);
+			if (status == OK)
+				status = resolve_spec(fmt, spec);
+			del_spec(&spec);
 		}
 	}
 	return (status);

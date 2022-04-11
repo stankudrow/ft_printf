@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_slist_popleft.c                                 :+:      :+:    :+:   */
+/*   spec_cdtors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 00:20:06 by stanislav         #+#    #+#             */
-/*   Updated: 2022/03/25 00:20:06 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 17:50:22 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 22:17:05 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_slist.h"
+#include "ft_printf.h"
 
-t_slist	*ft_slist_popleft(t_slist **lst)
+t_spec	*init_spec(void)
 {
-	t_slist	*first;
+	t_spec	*spec;
 
-	if (*lst)
+	spec = ft_calloc(1, sizeof(t_spec));
+	if (!spec)
+		return (NULL);
+	spec->width = -1;
+	spec->precision = -1;
+	spec->type = 0;
+	spec->str = NULL;
+	spec->len = 0;
+	return (spec);
+}
+
+void	del_spec(t_spec **spec)
+{
+	if (spec)
 	{
-		first = *lst;
-		*lst = first->next;
-		first->next = NULL;
-		return (first);
+		if (*spec)
+		{
+			if ((*spec)->str)
+				free((*spec)->str);
+			free(*spec);
+			*spec = NULL;
+		}
 	}
-	return (NULL);
 }

@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 13:17:32 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/03 22:52:06 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 17:54:28 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 17:54:28 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	set_flags(t_fmt*fmt, t_spec*spec)
+t_status	set_flags(t_fmt*fmt, t_spec*spec)
 {
 	while (*fmt->fcp)
 	{
@@ -32,5 +32,5 @@ int	set_flags(t_fmt*fmt, t_spec*spec)
 	}
 	if (*fmt->fcp == '\0')
 		return (ERROR);
-	return (SUCCESS);
+	return (OK);
 }

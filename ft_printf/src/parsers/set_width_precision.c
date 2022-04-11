@@ -5,34 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 20:33:56 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/02 17:33:54 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 18:59:14 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 20:37:30 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	set_width(t_fmt *fmt, t_spec *spec)
+/* $m logic implementation appears to be tedious - * is enough. */
+
+t_status	set_width(t_fmt *fmt, t_spec *spec)
 {
-	if (ft_isdigit(*fmt->fcp))
-		spec->width = ft_atoi(fmt->fcp);
-	while (ft_isdigit(*fmt->fcp))
+	if (*fmt->fcp == '*')
+	{
+		spec->width = va_arg(fmt->ap, int);
+		if (spec->width < 0)
+		{
+			if (pf_intabs_overflow(spec->width))
+				return (ERROR);
+			spec->width *= -1;
+			spec->flags.minus = True;
+		}
 		fmt->fcp++;
+	}
+	if (ft_isdigit(*fmt->fcp))
+	{
+		if (pf_atoi(&spec->width, fmt->fcp) == False)
+			return (ERROR);
+		while (ft_isdigit(*fmt->fcp))
+			fmt->fcp++;
+	}
 	if (*fmt->fcp)
-		return (SUCCESS);
+		return (OK);
 	return (ERROR);
 }
 
-int	set_precision(t_fmt *fmt, t_spec *spec)
+t_status	set_precision(t_fmt *fmt, t_spec *spec)
 {
 	if (*fmt->fcp == '.')
 	{
 		fmt->fcp++;
-		spec->precision = ft_atoi(fmt->fcp);
-		while (ft_isdigit(*fmt->fcp))
+		if (*fmt->fcp == '*')
+		{
+			spec->precision = va_arg(fmt->ap, int);
+			if (spec->precision < 0)
+				spec->precision = -1;
 			fmt->fcp++;
-		if (!*fmt->fcp)
-			return (ERROR);
+		}
+		if (ft_isdigit(*fmt->fcp))
+		{
+			if (pf_atoi(&spec->precision, fmt->fcp) == False)
+				return (ERROR);
+			while (ft_isdigit(*fmt->fcp))
+				fmt->fcp++;
+		}
+		else
+			spec->precision = 0;
 	}
-	return (SUCCESS);
+	if (!*fmt->fcp)
+		return (ERROR);
+	return (OK);
 }

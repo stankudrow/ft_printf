@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/11 15:48:02 by stanislav         #+#    #+#             */
-/*   Updated: 2022/03/21 23:43:35 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/11 20:11:20 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/11 20:52:55 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_bool	append_spec_str(t_fmt *fmt, t_spec *spec)
+static t_status	attach_specstr(t_fmt *fmt, t_spec *spec)
 {
 	char	*tmp;
 
@@ -20,21 +20,19 @@ static t_bool	append_spec_str(t_fmt *fmt, t_spec *spec)
 	fmt->str = ft_strjoin(fmt->str, spec->str);
 	free(tmp);
 	if (!fmt->str)
-		return (-1);
+		return (ERROR);
+	if (pf_intsum_overflow(fmt->total, spec->len))
+		return (FAILURE);
 	fmt->total += spec->len;
-	return (fmt->total);
+	return (OK);
 }
 
-int	resolve_spec(t_fmt *fmt, t_spec *spec)
+static t_status	resolve_intspec(t_fmt *fmt, t_spec *spec)
 {
-	int	ctype;
-	int	res;
+	t_status	status;
 
-	ctype = spec->type;
-	if (ctype == '%')
-		res = resolve_c(spec, ctype);
-	if (ctype == 'c')
-		res = resolve_c(spec, va_arg(fmt->ap, int));
+	if (spec->type == '%' || spec->type == 'c')
+		status = resolve_c(fmt, spec);
 	/*
 	if (ctype == 's')
 		res = resolve_s(spec, va_arg(fmt->ap, char *));
@@ -51,7 +49,18 @@ int	resolve_spec(t_fmt *fmt, t_spec *spec)
 	if (ctype == 'p')
 		res = resolve_p(spec, va_arg(fmt->ap, UI));
 	*/
-	if (res < 0)
-		return (res);
-	return (append_spec_str(fmt, spec));
+	if (status != OK)
+		return (status);
+	return (attach_specstr(fmt, spec));
+}
+
+/* The else branch is reserved for float types resolving. */
+t_status	resolve_spec(t_fmt *fmt, t_spec *spec)
+{
+	if (!spec->type)
+		return (ERROR);
+	if (ft_strchr(INT_TYPES, spec->type))
+		return (resolve_intspec(fmt, spec));
+	else
+		return (FAILURE);
 }
