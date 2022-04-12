@@ -18,8 +18,7 @@ CDS_SRC := $(addprefix $(CDS_DIR)/, $(CDS_SRC))
 PARS_SRC := parse_spec.c set_flags.c set_length.c \
 set_width_precision.c  set_type.c
 PARS_SRC := $(addprefix $(PARS_DIR)/, $(PARS_SRC))
-RES_SRC := resolve_spec.c resolve_c.c
-#resolve_s.c
+RES_SRC := resolve_spec.c resolve_c.c resolve_s.c
 # resolve_di.c resolve_o.c resolve_u.c resolve_x.c resolve_X.c resolve_p.c
 RES_SRC := $(addprefix $(RES_DIR)/, $(RES_SRC))
 UTILS_SRC := pf_atoi.c pf_intop_overflow.c pf_pad.c

@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:11:20 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/12 23:11:39 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 23:35:01 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static t_status	resolve_intspec(t_fmt *fmt, t_spec *spec)
 
 	if (spec->type == '%' || spec->type == 'c')
 		status = resolve_c(fmt, spec);
+	if (spec->type == 's')
+		status = resolve_s(fmt, spec);
 	/*
-	if (ctype == 's')
-		res = resolve_s(spec, va_arg(fmt->ap, char *));
 	if (ctype == 'd' || ctype == 'i')
 		res = resolve_di(spec, va_arg(fmt->ap, int));
 	if (ctype == 'o')

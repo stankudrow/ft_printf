@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:21:53 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/12 23:28:41 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 23:50:26 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_status	resolve_char(t_fmt *fmt, t_spec *spec)
 	wint_t	chr;
 
 	chr = get_argchar(fmt, spec);
-	if (spec->width == -1)
+	if (spec->width < 0)
 		spec->width = 1;
 	spec->str = ft_calloc(spec->width + 1, sizeof(unsigned char));
 	if (!spec->str)
@@ -52,7 +52,7 @@ static t_status	resolve_percent(t_spec *spec)
 	str = ft_strdup("%");
 	if (!str)
 		return (ERROR);
-	if (spec->width == -1)
+	if (spec->width < 0)
 		spec->width = 1;
 	if (spec->width > 0)
 		spec->width--;

@@ -1,74 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   resolve_s.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/11 00:13:06 by stanislav         #+#    #+#             */
-/*   Updated: 2022/03/17 22:52:20 by stanislav        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
 
-static void	resolve_spec_s(t_spec *spec, char **tmpstr)
+t_status	resolve_s(t_fmt *fmt, t_spec *spec)
 {
-	if (spec->flags->minus)
-	{
-		spec->flags->zero = False;
-		spec->flags->zfill = ' ';
-	}
-	if (!*tmpstr)
-	{
-		*tmpstr = NULLSTR;
-		if (spec->widprec->prec > 0)
-			spec->widprec->prec = 0;
-	}
-	if (!spec->widprec->dot || (spec->widprec->prec < 0))
-		spec->widprec->prec = ft_strlen(*tmpstr);
-}
+	char	*strarg;
+	char	*str;
 
-static char	*add_padding(t_spec *spec, char *str)
-{
-	int		len;
-	char	*pad;
-	char	*newstr;
-
-	len = spec->widprec->width - spec->widprec->prec;
-	if (len > 0)
-	{
-		pad = ft_calloc(len + 1, sizeof(char));
-		if (pad)
-		{
-			ft_memset(pad, spec->flags->zfill, len);
-			if (spec->flags->minus)
-				newstr = ft_strjoin(str, pad);
-			else
-				newstr = ft_strjoin(pad, str);
-			free(str);
-			free(pad);
-			return (newstr);
-		}
-	}
-	return (str);
-}
-
-int	resolve_s(t_spec *spec, char *str)
-{
-	char	*tmp;
-	char	*newstr;
-
-	tmp = str;
-	resolve_spec_s(spec, &tmp);
-	newstr = ft_calloc(spec->widprec->prec + 1, sizeof(char));
-	if (!newstr)
-		return (-1);
-	ft_memcpy(newstr, tmp, spec->widprec->prec);
-	tmp = add_padding(spec, newstr);
-	if (!tmp)
-		return (-1);
-	spec->str = tmp;
+	strarg = va_arg(fmt->ap, char *);
+	if (strarg == NULL)
+		strarg = NULLSTR;
+	if (spec->width < 0)
+		spec->width = 0;
+	if (spec->precision < 0)
+		spec->precision = ft_strlen(strarg);
+	str = ft_calloc(spec->precision + 1, sizeof(unsigned char));
+	if (!str)
+		return (ERROR);
+	ft_strlcpy(str, strarg, spec->precision + 1);
+	if (spec->flags.minus)
+		spec->str = pf_pad_right(str, ' ', spec->width);
+	else if (spec->flags.zero)
+		spec->str = pf_pad_left(str, '0', spec->width);
+	else
+		spec->str = pf_pad_left(str, ' ', spec->width);
+	free(str);
+	if (!spec->str)
+		return (ERROR);
 	spec->len = ft_strlen(spec->str);
-	return (spec->len);
+	return (OK);
 }

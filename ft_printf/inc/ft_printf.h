@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 21:42:34 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 23:45:33 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ t_status	set_type(t_fmt *fmt, t_spec *spec);
 
 t_status	resolve_spec(t_fmt *fmt, t_spec *spec);
 t_status	resolve_c(t_fmt *fmt, t_spec *spec);
+t_status	resolve_s(t_fmt *fmt, t_spec *spec);
 
 /*
-int			resolve_s(t_spec *spec, char *str);
 int			resolve_di(t_spec *spec, int nbr);
 int			resolve_o(t_spec *spec, UI unbr);
 int			resolve_u(t_spec *spec, UI unbr);
