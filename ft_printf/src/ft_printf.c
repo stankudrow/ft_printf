@@ -6,12 +6,13 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:51:32 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 17:51:32 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 22:48:47 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+/* ft_putstr_fd had to be replaced with write syscall. */
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
@@ -23,7 +24,7 @@ int	ft_printf(const char *fmt, ...)
 	total = ft_vasprintf(&str, fmt, ap);
 	if (total >= 0)
 	{
-		ft_putstr_fd(STDOUT_FILENO, str);
+		write(STDOUT_FILENO, str, total);
 		free(str);
 	}
 	va_end(ap);

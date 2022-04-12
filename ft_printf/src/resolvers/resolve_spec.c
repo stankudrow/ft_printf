@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:11:20 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 20:52:55 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 23:11:39 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_status	attach_specstr(t_fmt *fmt, t_spec *spec)
 	char	*tmp;
 
 	tmp = fmt->str;
-	fmt->str = ft_strjoin(fmt->str, spec->str);
+	fmt->str = ft_memjoin(fmt->str, fmt->total, spec->str, spec->len);
 	free(tmp);
 	if (!fmt->str)
 		return (ERROR);

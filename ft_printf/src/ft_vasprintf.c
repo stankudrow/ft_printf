@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:54:58 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 19:40:40 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/12 23:10:20 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_status	buffer_fmtstr(t_fmt *fmt)
 	substr = ft_strndup(fmt->fpp, sublen);
 	if (!substr)
 		return (FAILURE);
-	newstr = ft_strjoin(fmt->str, substr);
+	newstr = ft_memjoin(fmt->str, fmt->total, substr, sublen);
 	free(substr);
 	if (!newstr)
 		return (FAILURE);
