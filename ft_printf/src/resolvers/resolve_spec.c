@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:11:20 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/12 23:35:01 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/15 00:06:06 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_status	attach_specstr(t_fmt *fmt, t_spec *spec)
 	if (!fmt->str)
 		return (ERROR);
 	if (pf_intsum_overflow(fmt->total, spec->len))
-		return (FAILURE);
+		return (FAIL);
 	fmt->total += spec->len;
 	return (OK);
 }
@@ -32,22 +32,24 @@ static t_status	resolve_intspec(t_fmt *fmt, t_spec *spec)
 	t_status	status;
 
 	if (spec->type == '%' || spec->type == 'c')
-		status = resolve_c(fmt, spec);
+		status = resolve_chr(fmt, spec);
 	if (spec->type == 's')
-		status = resolve_s(fmt, spec);
+		status = resolve_str(fmt, spec);
 	/*
-	if (ctype == 'd' || ctype == 'i')
-		res = resolve_di(spec, va_arg(fmt->ap, int));
-	if (ctype == 'o')
-		res = resolve_o(spec, va_arg(fmt->ap, UI));
-	if (ctype == 'u')
-		res = resolve_u(spec, va_arg(fmt->ap, UI));
-	if (ctype == 'x')
-		res = resolve_uxl(spec, va_arg(fmt->ap, UI));
-	if (ctype == 'X')
-		res = resolve_uxu(spec, va_arg(fmt->ap, UI));
-	if (ctype == 'p')
-		res = resolve_p(spec, va_arg(fmt->ap, UI));
+	if (spec->type == 'o')
+		status = resolve_unbr(fmt, spec);
+	if (spec->type == 'u')
+		status = resolve_unbr(fmt, spec);
+	if (spec->type == 'x')
+		status = resolve_unbr(fmt, spec);
+	if (spec->type == 'X')
+		status = resolve_unbr(fmt, spec);
+	*/
+	if (spec->type == 'p')
+		status = resolve_ptr(fmt, spec);
+	/*
+	if (spec->type == 'd' || spec->type == 'i')
+		status = resolve_nbr(fmt, spec);
 	*/
 	if (status != OK)
 		return (status);
@@ -62,5 +64,5 @@ t_status	resolve_spec(t_fmt *fmt, t_spec *spec)
 	if (ft_strchr(INT_TYPES, spec->type))
 		return (resolve_intspec(fmt, spec));
 	else
-		return (FAILURE);
+		return (FAIL);
 }

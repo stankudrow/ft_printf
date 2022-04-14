@@ -6,17 +6,20 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:59:14 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 20:37:30 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/14 20:33:47 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/* $m logic implementation appears to be tedious - * is enough. */
+#define WIDTH 0
+#define PRECISION 0
 
-t_status	set_width(t_fmt *fmt, t_spec *spec)
+static t_status	parse_star(t_fmt *fmt, t_spec *spec, unsigned char mode)
 {
-	if (*fmt->fcp == '*')
+	if (*fmt->fcp != '*')
+		return (FAIL);
+	if (mode == WIDTH)
 	{
 		spec->width = va_arg(fmt->ap, int);
 		if (spec->width < 0)
@@ -28,6 +31,22 @@ t_status	set_width(t_fmt *fmt, t_spec *spec)
 		}
 		fmt->fcp++;
 	}
+	if (mode == PRECISION)
+	{
+		spec->precision = va_arg(fmt->ap, int);
+		if (spec->precision < 0)
+			spec->precision = -1;
+		fmt->fcp++;
+	}
+	if (!*fmt->fcp)
+		return (ERROR);
+	return (OK);
+}
+
+t_status	set_width(t_fmt *fmt, t_spec *spec)
+{
+	if (*fmt->fcp == '*')
+		return (parse_star(fmt, spec, WIDTH));
 	if (ft_isdigit(*fmt->fcp))
 	{
 		if (pf_atoi(&spec->width, fmt->fcp) == False)
@@ -46,12 +65,7 @@ t_status	set_precision(t_fmt *fmt, t_spec *spec)
 	{
 		fmt->fcp++;
 		if (*fmt->fcp == '*')
-		{
-			spec->precision = va_arg(fmt->ap, int);
-			if (spec->precision < 0)
-				spec->precision = -1;
-			fmt->fcp++;
-		}
+			return (parse_star(fmt, spec, PRECISION));
 		if (ft_isdigit(*fmt->fcp))
 		{
 			if (pf_atoi(&spec->precision, fmt->fcp) == False)

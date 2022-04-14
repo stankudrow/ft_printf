@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:54:58 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 17:54:58 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/14 18:16:23 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_status	set_char_short(t_fmt *fmt, t_spec *spec)
 			}
 			return (ERROR);
 		}
-		return (FAILURE);
+		return (FAIL);
 	}
 	return (ERROR);
 }
@@ -51,7 +51,7 @@ static t_status	set_long_long(t_fmt *fmt, t_spec *spec)
 			}
 			return (ERROR);
 		}
-		return (FAILURE);
+		return (FAIL);
 	}
 	return (ERROR);
 }

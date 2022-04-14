@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/12 23:45:33 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/14 23:55:48 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <stddef.h>
+# include <stdint.h>
 # include <wchar.h>
 
 # include "ft_ctype.h"
@@ -31,8 +32,15 @@
 # define DB "0123456789"
 # define OB "01234567"
 
-// #IF __UNIX__ ONE LOGIC IF MACOS - ANOTHER
-# define NULLSTR "(null)"
+# ifdef __linux__
+#  define NULLSTR "(null)"
+#  define NULLPTR "(nil)"
+# elif __APPLE__
+#  define NULLSTR "(null)"
+#  define NULLPTR "(null)"
+# else
+#  error "This project is only for MacOS/Linux OS."
+# endif
 
 # define AVAIL_FLAGS "#0- +"
 # define INT_TYPES "cspdiuxX%"
@@ -40,7 +48,7 @@
 typedef enum e_status
 {
 	ERROR = -1,
-	FAILURE = 0,
+	FAIL = 0,
 	OK = 1
 }	t_status;
 
@@ -114,16 +122,13 @@ t_status	set_length(t_fmt *fmt, t_spec *spec);
 t_status	set_type(t_fmt *fmt, t_spec *spec);
 
 t_status	resolve_spec(t_fmt *fmt, t_spec *spec);
-t_status	resolve_c(t_fmt *fmt, t_spec *spec);
-t_status	resolve_s(t_fmt *fmt, t_spec *spec);
+t_status	resolve_chr(t_fmt *fmt, t_spec *spec);
+t_status	resolve_str(t_fmt *fmt, t_spec *spec);
+t_status	resolve_ptr(t_fmt *fmt, t_spec *spec);
+t_status	resolve_unbr(t_fmt *fmt, t_spec *spec);
 
 /*
 int			resolve_di(t_spec *spec, int nbr);
-int			resolve_o(t_spec *spec, UI unbr);
-int			resolve_u(t_spec *spec, UI unbr);
-int			resolve_uxl(t_spec *spec, UI unbr);
-int			resolve_uxu(t_spec *spec, UI unbr);
-int			resolve_p(t_spec *spec, UI unbr);
 */
 
 #endif

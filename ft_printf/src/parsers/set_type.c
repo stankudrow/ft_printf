@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:03:15 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 20:14:39 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/14 18:17:15 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ t_status	set_type(t_fmt *fmt, t_spec *spec)
 		reset_flags(spec);
 		return (OK);
 	}
-	return (FAILURE);
+	return (FAIL);
 }
