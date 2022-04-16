@@ -6,13 +6,13 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:52:35 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/15 00:29:25 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/17 00:27:20 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*init_arg_ptr(t_fmt *fmt)
+static char	*get_arg_ptr(t_fmt *fmt)
 {
 	void	*ptr;
 	char	*str;
@@ -22,8 +22,6 @@ static char	*init_arg_ptr(t_fmt *fmt)
 		str = ft_strdup(NULLPTR);
 	else
 		str = ft_ulltoa_base((uintptr_t)ptr, HBL);
-	if (!str)
-		return (NULL);
 	return (str);
 }
 
@@ -31,8 +29,11 @@ static t_status	pad_ptr(t_spec *spec)
 {
 	char	*str;
 
-	if (spec->precision > (int)ft_strlen(spec->str))
-		spec->len = spec->precision;
+	spec->precision = ft_strlen(spec->str);
+	if (spec->width > spec->precision)
+		spec->width -= spec->precision;
+	else
+		spec->width = 0;
 	if (spec->flags.minus)
 		str = pf_pad_right(spec->str, ' ', spec->width);
 	else
@@ -63,17 +64,14 @@ t_status	resolve_ptr(t_fmt *fmt, t_spec *spec)
 	t_status	status;
 	char		*str;
 
-	str = init_arg_ptr(fmt);
+	str = get_arg_ptr(fmt);
 	if (!str)
 		return (ERROR);
 	spec->str = str;
-	if (!ft_strcmp(NULLPTR, spec->str))
-	{
-		spec->len = ft_strlen(str);
-		return (OK);
-	}
-	status = pad_ptr(spec);
+	status = OK;
+	if (ft_strcmp(NULLPTR, spec->str))
+		status = prefix_ptr(spec);
 	if (status != OK)
 		return (status);
-	return (prefix_ptr(spec));
+	return (pad_ptr(spec));
 }
