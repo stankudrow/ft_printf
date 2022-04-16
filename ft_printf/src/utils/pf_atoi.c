@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:57:02 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 18:57:03 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/16 22:28:39 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static t_bool	ft_post_skip(const char *nptr)
 {
 	while (ft_isdigit(*nptr))
 		nptr++;
-	return (*nptr == '\0');
+	return (*nptr != '\0');
 }
 
 t_bool	pf_atoi(int *number, const char *nptr)

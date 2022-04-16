@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:53:39 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 17:53:39 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/16 22:26:07 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,24 @@
 
 t_status	set_spec(t_fmt *fmt, t_spec *spec)
 {
-	if (set_flags(fmt, spec))
-		if (set_width(fmt, spec) && set_precision(fmt, spec))
-			if (set_length(fmt, spec))
-				return (set_type(fmt, spec));
-	return (ERROR);
+	t_status	status;
+
+	status = set_flags(fmt, spec);
+	if (status == OK)
+	{
+		status = set_width(fmt, spec);
+		if (status == OK)
+		{
+			status = set_precision(fmt, spec);
+			if (status == OK)
+			{
+				status = set_length(fmt, spec);
+				if (status == OK)
+					return (set_type(fmt, spec));
+			}
+		}
+	}
+	return (status);
 }
 
 t_status	parse_spec(t_fmt *fmt)
