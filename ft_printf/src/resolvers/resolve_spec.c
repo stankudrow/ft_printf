@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:11:20 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/15 00:06:06 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/17 22:25:32 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,22 @@ static t_status	resolve_intspec(t_fmt *fmt, t_spec *spec)
 
 	if (spec->type == '%' || spec->type == 'c')
 		status = resolve_chr(fmt, spec);
-	if (spec->type == 's')
+	else if (spec->type == 's')
 		status = resolve_str(fmt, spec);
-	/*
-	if (spec->type == 'o')
+	else if (spec->type == 'o')
 		status = resolve_unbr(fmt, spec);
-	if (spec->type == 'u')
+	else if (spec->type == 'u')
 		status = resolve_unbr(fmt, spec);
-	if (spec->type == 'x')
+	else if (spec->type == 'x')
 		status = resolve_unbr(fmt, spec);
-	if (spec->type == 'X')
+	else if (spec->type == 'X')
 		status = resolve_unbr(fmt, spec);
-	*/
-	if (spec->type == 'p')
+	else if (spec->type == 'p')
 		status = resolve_ptr(fmt, spec);
-	/*
-	if (spec->type == 'd' || spec->type == 'i')
-		status = resolve_nbr(fmt, spec);
-	*/
+	//else if (spec->type == 'd' || spec->type == 'i')
+	//	status = resolve_nbr(fmt, spec);
+	else
+		return (FAIL);
 	if (status != OK)
 		return (status);
 	return (attach_specstr(fmt, spec));

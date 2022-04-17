@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/14 23:55:48 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/17 22:25:04 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,6 @@ t_status	resolve_chr(t_fmt *fmt, t_spec *spec);
 t_status	resolve_str(t_fmt *fmt, t_spec *spec);
 t_status	resolve_ptr(t_fmt *fmt, t_spec *spec);
 t_status	resolve_unbr(t_fmt *fmt, t_spec *spec);
-
-/*
-int			resolve_di(t_spec *spec, int nbr);
-*/
+t_status	resolve_nbr(t_fmt *fmt, t_spec *spec);
 
 #endif

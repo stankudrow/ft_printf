@@ -6,14 +6,14 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:59:14 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/14 20:33:47 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/17 23:51:37 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #define WIDTH 0
-#define PRECISION 0
+#define PRECISION 1
 
 static t_status	parse_star(t_fmt *fmt, t_spec *spec, unsigned char mode)
 {

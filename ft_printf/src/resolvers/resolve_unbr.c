@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   resolve_unbr.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/17 00:39:22 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/17 23:54:45 by stanislav        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static uintmax_t	get_arg_unbr(t_fmt *fmt, t_spec *spec)
@@ -17,29 +29,7 @@ static uintmax_t	get_arg_unbr(t_fmt *fmt, t_spec *spec)
 	return ((uintmax_t)unbr);
 }
 
-static t_status	prefixate(t_spec *spec, uintmax_t unbr)
-{
-	char	*str;
-
-	if (spec->flags.sharp && unbr && spec->type != 'u')
-	{
-		if (spec->type == 'o')
-			str = ft_strjoin("0", spec->str);
-		if (spec->type == 'x')
-			str = ft_strjoin("0x", spec->str);
-		if (spec->type == 'X')
-			str = ft_strjoin("0X", spec->str);
-		if (!str)
-			return (ERROR);
-		free(spec->str);
-		spec->str = str;
-		spec->len = ft_strlen(str);
-		free(str);
-	}
-	return (OK);
-}
-
-static t_status	acc_unbr_str(t_spec *spec, uintmax_t unbr)
+static t_status	save_unbr_str(t_spec *spec, uintmax_t unbr)
 {
 	char	*str;
 
@@ -59,29 +49,84 @@ static t_status	acc_unbr_str(t_spec *spec, uintmax_t unbr)
 	}
 	if (!str)
 		return (ERROR);
-	if (spec->precision < 0)
+	spec->str = str;
+	spec->len = ft_strlen(str);
+	if (spec->precision >= (int)spec->len)
+		spec->precision -= (int)spec->len;
+	else
 		spec->precision = 0;
-	spec->str = pf_pad_left(str, '0', spec->precision);
-	free(str);
-	return (prefixate(spec, unbr));
+	return (OK);
+}
+
+static t_status	prefixate_unbr_str(t_spec *spec, uintmax_t unbr)
+{
+	char	*str;
+
+	if (!spec->len)
+		return (OK);
+	str = pf_pad_left(spec->str, '0', spec->precision);
+	if (!str)
+		return (ERROR);
+	free(spec->str);
+	spec->str = str;
+	if (spec->flags.sharp && unbr && spec->type != 'u')
+	{
+		if (spec->type == 'o')
+			str = ft_strjoin("0", spec->str);
+		if (spec->type == 'x')
+			str = ft_strjoin("0x", spec->str);
+		if (spec->type == 'X')
+			str = ft_strjoin("0X", spec->str);
+		if (!str)
+			return (ERROR);
+		free(spec->str);
+		spec->str = str;
+	}
+	spec->len = ft_strlen(str);
+	return (OK);
+}
+
+static t_status	pad_unbr_str(t_spec *spec, char padchar)
+{
+	char	*str;
+
+	if (spec->flags.minus)
+	{
+		if (spec->width >= (int)spec->len)
+			spec->width -= (int)spec->len;
+		else
+			spec->width = 0;
+		str = pf_pad_right(spec->str, padchar, spec->width);
+	}
+	else
+	{
+		if (spec->width >= (int)spec->len)
+			spec->width -= (int)spec->len;
+		else
+			spec->width = 0;
+		str = pf_pad_left(spec->str, padchar, spec->width);
+	}
+	if (!str)
+		return (ERROR);
+	free(spec->str);
+	spec->str = str;
+	spec->len = ft_strlen(str);
+	return (OK);
 }
 
 t_status	resolve_unbr(t_fmt *fmt, t_spec *spec)
 {
+	uintmax_t	unbr;
 	t_status	status;
-	char		*unbrstr;
 
-	status = acc_unbr_str(spec, get_arg_unbr(fmt, spec));
+	unbr = get_arg_unbr(fmt, spec);
+	status = save_unbr_str(spec, unbr);
 	if (status != OK)
 		return (status);
-	if (spec->flags.minus)
-		unbrstr = pf_pad_right(spec->str, ' ', spec->width);
-	else
-		unbrstr = pf_pad_left(spec->str, ' ', spec->width);
-	if (!unbrstr)
-		return (ERROR);
-	free(spec->str);
-	spec->str = unbrstr;
-	spec->len = ft_strlen(spec->str);
-	return (OK);
+	status = prefixate_unbr_str(spec, unbr);
+	if (status != OK)
+		return (status);
+	if (spec->flags.zero)
+		return (pad_unbr_str(spec, '0'));
+	return (pad_unbr_str(spec, ' '));
 }
