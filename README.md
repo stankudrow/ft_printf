@@ -28,4 +28,4 @@ Because ft_putnbr() and ft_putstr() aren't enough.
 
 1. https://github.com/Tripouille/printfTester - на Ubuntu (TIMEOUT 40000) и MacOS (TIMEOUT 10000) проходят;
 2. https://github.com/paulo-santana/ft_printf_tester - Ubuntu проходит, на MacOS сам тестер ведёт себя плохо;
-3. https://github.com/gavinfielder/pft - на Ubuntu не проверял
+3. https://github.com/gavinfielder/pft
