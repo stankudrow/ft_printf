@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:32:57 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/16 23:48:19 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 16:51:50 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ t_status	resolve_str(t_fmt *fmt, t_spec *spec)
 	else
 		spec->width -= spec->len;
 	if (spec->flags.minus)
-		spec->str = pf_pad_right(str, ' ', spec->width);
-	else if (spec->flags.zero)
-		spec->str = pf_pad_left(str, '0', spec->width);
+		spec->str = pf_pad_right(str, spec->fill, spec->width);
 	else
-		spec->str = pf_pad_left(str, ' ', spec->width);
+		spec->str = pf_pad_left(str, spec->fill, spec->width);
 	free(str);
 	if (!spec->str)
 		return (ERROR);

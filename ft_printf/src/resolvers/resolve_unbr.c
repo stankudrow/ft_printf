@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 00:39:22 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/17 23:54:45 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 16:59:48 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,32 +86,16 @@ static t_status	prefixate_unbr_str(t_spec *spec, uintmax_t unbr)
 	return (OK);
 }
 
-static t_status	pad_unbr_str(t_spec *spec, char padchar)
+static t_status	pad_unbr_str(t_spec *spec)
 {
-	char	*str;
-
-	if (spec->flags.minus)
-	{
-		if (spec->width >= (int)spec->len)
-			spec->width -= (int)spec->len;
-		else
-			spec->width = 0;
-		str = pf_pad_right(spec->str, padchar, spec->width);
-	}
+	if (spec->width >= (int)spec->len)
+		spec->width -= (int)spec->len;
 	else
-	{
-		if (spec->width >= (int)spec->len)
-			spec->width -= (int)spec->len;
-		else
-			spec->width = 0;
-		str = pf_pad_left(spec->str, padchar, spec->width);
-	}
-	if (!str)
-		return (ERROR);
-	free(spec->str);
-	spec->str = str;
-	spec->len = ft_strlen(str);
-	return (OK);
+		spec->width = 0;
+	if (spec->flags.minus)
+		return (pf_pad_spec_right(spec, spec->fill, spec->width));
+	else
+		return (pf_pad_spec_left(spec, spec->fill, spec->width));
 }
 
 t_status	resolve_unbr(t_fmt *fmt, t_spec *spec)
@@ -126,7 +110,5 @@ t_status	resolve_unbr(t_fmt *fmt, t_spec *spec)
 	status = prefixate_unbr_str(spec, unbr);
 	if (status != OK)
 		return (status);
-	if (spec->flags.zero)
-		return (pad_unbr_str(spec, '0'));
-	return (pad_unbr_str(spec, ' '));
+	return (pad_unbr_str(spec));
 }

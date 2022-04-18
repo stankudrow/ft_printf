@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:03:15 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/14 18:17:15 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 11:41:27 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	reset_flags(t_spec *spec)
 		spec->flags.zero = False;
 	if (spec->flags.plus)
 		spec->flags.space = False;
+	if (spec->flags.zero)
+		spec->fill = '0';
 }
 
 /* str[r]chr will not work if '\0' provided -> checking before */

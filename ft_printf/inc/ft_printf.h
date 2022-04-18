@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/17 22:25:04 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 16:43:25 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct s_spec
 	int			precision;
 	t_flags		flags;
 	t_length	length;
+	char		fill;
+	char		sign;
 	char		type;
 	size_t		len;
 	char		*str;
@@ -105,8 +107,10 @@ int			ft_vasprintf(char **strp, const char *fmt, va_list ap);
 t_bool		pf_intabs_overflow(int nbr);
 t_bool		pf_intsum_overflow(int nbr1, int nbr2);
 t_bool		pf_atoi(int *number, const char *nptr);
-char		*pf_pad_right(const char *str, unsigned char chr, size_t times);
 char		*pf_pad_left(const char *str, unsigned char chr, size_t times);
+t_status	pf_pad_spec_left(t_spec *spec, unsigned char chr, size_t times);
+char		*pf_pad_right(const char *str, unsigned char chr, size_t times);
+t_status	pf_pad_spec_right(t_spec *spec, unsigned char chr, size_t times);
 
 t_fmt		*init_fmt(char **strp, const char *fmt, va_list ap);
 void		del_fmt(t_fmt **fmt);

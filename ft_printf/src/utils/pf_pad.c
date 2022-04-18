@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:43:45 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/11 22:04:06 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 16:42:45 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,40 @@ static char	*pf_alloc_pad(unsigned char chr, size_t times)
 	return (NULL);
 }
 
+char	*pf_pad_left(const char *str, unsigned char chr, size_t times)
+{
+	char	*pad;
+	char	*newstr;
+
+	pad = pf_alloc_pad(chr, times);
+	if (pad)
+	{
+		newstr = ft_strjoin(pad, str);
+		free(pad);
+		if (newstr)
+			return (newstr);
+	}
+	newstr = ft_strdup(str);
+	if (newstr)
+		return (newstr);
+	return (NULL);
+}
+
+t_status	pf_pad_spec_left(t_spec *spec, unsigned char chr, size_t times)
+{
+	char	*str;
+
+	if (!spec->str)
+		return (FAIL);
+	str = pf_pad_left(spec->str, chr, times);
+	if (!str)
+		return (ERROR);
+	free(spec->str);
+	spec->str = str;
+	spec->len = ft_strlen(str);
+	return (OK);
+}
+
 char	*pf_pad_right(const char *str, unsigned char chr, size_t times)
 {
 	char	*pad;
@@ -47,21 +81,17 @@ char	*pf_pad_right(const char *str, unsigned char chr, size_t times)
 	return (NULL);
 }
 
-char	*pf_pad_left(const char *str, unsigned char chr, size_t times)
+t_status	pf_pad_spec_right(t_spec *spec, unsigned char chr, size_t times)
 {
-	char	*pad;
-	char	*newstr;
+	char	*str;
 
-	pad = pf_alloc_pad(chr, times);
-	if (pad)
-	{
-		newstr = ft_strjoin(pad, str);
-		free(pad);
-		if (newstr)
-			return (newstr);
-	}
-	newstr = ft_strdup(str);
-	if (newstr)
-		return (newstr);
-	return (NULL);
+	if (!spec->str)
+		return (FAIL);
+	str = pf_pad_right(spec->str, chr, times);
+	if (!str)
+		return (ERROR);
+	free(spec->str);
+	spec->str = str;
+	spec->len = ft_strlen(str);
+	return (OK);
 }

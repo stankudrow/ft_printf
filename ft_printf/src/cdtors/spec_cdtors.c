@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:50:22 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/14 20:31:54 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 14:58:34 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_spec	*init_spec(void)
 	spec = ft_calloc(1, sizeof(t_spec));
 	if (!spec)
 		return (NULL);
+	spec->fill = ' ';
+	spec->sign = '\0';
 	spec->width = 0;
 	spec->precision = -1;
 	spec->type = 0;

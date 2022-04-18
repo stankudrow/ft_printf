@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:21:53 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/15 00:01:59 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/18 16:48:57 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static t_status	resolve_char(t_fmt *fmt, t_spec *spec)
 	spec->str = ft_calloc(spec->width + 1, sizeof(unsigned char));
 	if (!spec->str)
 		return (ERROR);
-	if (spec->flags.zero)
-		ft_memset(spec->str, '0', spec->width);
-	else
-		ft_memset(spec->str, ' ', spec->width);
+	ft_memset(spec->str, spec->fill, spec->width);
 	if (spec->flags.minus)
 		spec->str[0] = chr;
 	else
@@ -56,12 +53,7 @@ static t_status	resolve_percent(t_spec *spec)
 		spec->width = 1;
 	if (spec->width > 0)
 		spec->width--;
-	if (spec->flags.minus)
-		spec->str = pf_pad_right(str, ' ', spec->width);
-	else if (spec->flags.zero)
-		spec->str = pf_pad_left(str, '0', spec->width);
-	else
-		spec->str = pf_pad_left(str, ' ', spec->width);
+	spec->str = pf_pad_right(str, spec->fill, spec->width);
 	free(str);
 	if (!spec->str)
 		return (ERROR);
