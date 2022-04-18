@@ -2,7 +2,9 @@
 
 Because ft_putnbr() and ft_putstr() aren't enough.
 
-Проект первого круга основного обучения (42cursus) Школы 42/21 - написать усечённый `printf`.
+Проект первого круга основного обучения (42cursus) Школы 42/21 - написать усечённый `printf`. Получился сильно связанный, костыльный, не быстрый `ft_printf` - большое/частое число выделений памяти низводит улучшения.
+
+Проверен по norminette версии 3.3.51. 
 
 # Руководства по семейству функций printf
 
@@ -24,6 +26,6 @@ Because ft_putnbr() and ft_putstr() aren't enough.
 
 # Тестеры
 
-* https://github.com/Tripouille/printfTester
-* https://github.com/paulo-santana/ft_printf_tester
-* https://github.com/gavinfielder/pft
+1. https://github.com/Tripouille/printfTester - на Ubuntu (TIMEOUT 40000) и MacOS (TIMEOUT 10000) проходят;
+2. https://github.com/paulo-santana/ft_printf_tester - Ubuntu проходит, на MacOS сам тестер ведёт себя плохо;
+3. https://github.com/gavinfielder/pft - на Ubuntu не проверял

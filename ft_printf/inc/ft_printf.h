@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 21:42:34 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/18 16:43:25 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/18 22:43:17 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/18 22:43:17 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #  define NULLPTR "(nil)"
 # elif __APPLE__
 #  define NULLSTR "(null)"
-#  define NULLPTR "(null)"
+#  define NULLPTR "0x0"
 # else
 #  error "This project is only for MacOS/Linux OS."
 # endif
