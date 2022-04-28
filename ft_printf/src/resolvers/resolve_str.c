@@ -6,7 +6,7 @@
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 22:45:12 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/18 22:45:12 by stanislav        ###   ########.fr       */
+/*   Updated: 2022/04/28 07:08:35 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ static char	*get_arg_str(t_fmt *fmt, t_spec *spec)
 	if (strarg == NULL)
 	{
 		strarg = NULLSTR;
-		if (spec->precision > 0 && spec->precision < (int)ft_strlen(strarg))
-			spec->precision = 0;
+		if (ft_strcmp(fmt->os, "linux") == 0)
+		{
+			if (spec->precision > 0 && spec->precision < (int)ft_strlen(strarg))
+				spec->precision = 0;
+		}
 	}
 	if (spec->precision < 0)
 		spec->precision = (int)ft_strlen(strarg);

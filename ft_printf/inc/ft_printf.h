@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stanislav <student.21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 22:43:17 by stanislav         #+#    #+#             */
-/*   Updated: 2022/04/18 22:43:17 by stanislav        ###   ########.fr       */
+/*   Created: 2022/04/28 07:05:53 by stanislav         #+#    #+#             */
+/*   Updated: 2022/04/28 07:08:52 by stanislav        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@
 # ifdef __linux__
 #  define NULLSTR "(null)"
 #  define NULLPTR "(nil)"
+#  define OS "linux"
 # elif __APPLE__
 #  define NULLSTR "(null)"
 #  define NULLPTR "0x0"
+#  define OS "apple"
 # else
 #  error "This project is only for MacOS/Linux OS."
 # endif
@@ -61,6 +63,7 @@ typedef enum e_status
 */
 typedef struct s_fmt
 {
+	const char	*os;
 	va_list		ap;
 	const char	*fmt;
 	const char	*fpp;

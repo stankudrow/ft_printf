@@ -5,12 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: stanislav <student.21-school.ru>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/18 22:46:10 by stanislav         #+#    #+#              #
-#    Updated: 2022/04/18 22:46:10 by stanislav        ###   ########.fr        #
+#    Created: 2022/04/28 07:05:39 by stanislav         #+#    #+#              #
+#    Updated: 2022/04/28 07:13:07 by stanislav        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := libftprintf.a
+
+ifeq ($(OS), Windows_NT)
+	$(error "The Windows platform is not supported")
+endif
 
 # Directories
 HDR_DIR := inc
