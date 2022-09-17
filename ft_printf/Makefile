@@ -6,7 +6,7 @@
 #    By: stanislav <student.21-school.ru>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 07:05:39 by stanislav         #+#    #+#              #
-#    Updated: 2022/04/28 07:13:07 by stanislav        ###   ########.fr        #
+#    Updated: 2022/09/18 01:27:59 by stanislav        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ PARS_DIR := parsers
 RES_DIR := resolvers
 UTILS_DIR := utils
 OBJ_DIR := obj
-LIB_DIR := libftx/libft
+LIB_DIR := libftx
 LIB_INC_DIR := $(LIB_DIR)/inc
 
 # Files
