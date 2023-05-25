@@ -2,9 +2,9 @@
 
 **Because ft_putnbr() and ft_putstr() aren't enough.**
 
-Проект первого круга основного обучения (42cursus) Школы 42/21 - написать усечённый `printf`. Проверен по norminette 3.3.51.
+Linted according to the `norminette` v3.3.51 rules.
 
-Скачивание: `git clone --recursive https://github.com/stankudrow/ft_printf.git`.
+Cloning: `git clone --recursive https://github.com/stankudrow/ft_printf.git`.
 
 ## Manuals
 
@@ -20,9 +20,9 @@
 2. `git submodule add https://github.com/stankudrow/libftx`;
 3. ***.gitmodules***
 
-Шаги 1 и 2 можно объединить: `git submodule add %remote_repo% %local_dir%`.
+Steps 1 and 2 can be done in a single step: `git submodule add %remote_repo% %local_dir%`.
 
-Примечание: подмодули сами не обновляются -> `git submodule update --remote`.
+Submodules, if updated, do not affect the repo. In this case, `git submodule update --remote`.
 
 ## Testers
 
