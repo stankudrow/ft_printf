@@ -8,11 +8,11 @@ Cloning: `git clone --recursive https://github.com/stankudrow/ft_printf.git`.
 
 ## Manuals
 
-* `man 3 printf` в терминале;
+* `man 3 printf` (in a terminal);
 * [Wikipedia (en)](https://en.wikipedia.org/wiki/Printf_format_string);
 * [IBM docs (en)](https://www.ibm.com/docs/en/ztpf/2020?topic=apis-fprintf-printf-sprintf-format-write-data);
 * [Opennet printf (ru)](https://www.opennet.ru/man.shtml?topic=printf&category=3&russian=0);
-* [Opennet vasprintf (ru)](https://www.opennet.ru/man.shtml?topic=vasprintf&category=3&russian=0) - основа ft_printf.
+* [Opennet vasprintf (ru)](https://www.opennet.ru/man.shtml?topic=vasprintf&category=3&russian=0) - the basis of this ft_printf.
 
 ## Libft\[x\]
 
